@@ -1,7 +1,21 @@
 <div class="container">
-    <a href="/usuario" class="btn btn-primary">Usuário</a>
-    <a href="/recurso" class="btn btn-primary">Recurso</a>
-    <a href="/produto" class="btn btn-primary">Produto</a>
-    <a href="/tipoproduto" class="btn btn-primary">TipoProduto</a>
-    <a href="/mesa" class="btn btn-primary">Mesa</a>
+    <div class="d-flex justify-content-between my-3">
+        <h1>Feed de Cifras</h1>
+        <a href="/usuario" class="btn btn-primary">Login</a>
+    </div>
+
+    <div class="list-group">
+      {{#each resources}}
+            <tr>
+                <th scope="row">{{this.id}}</th>
+                <td>{{this.nome}}</td>
+                <td>{{this.descricao}}</td>
+                <td>
+                    <a href="/resources/{{this.id}}" class="btn btn-primary">Mostrar</a>
+                    <a href="/resources/{{this.id}}/edit" class="btn btn-secondary">Editar</a>
+                    <a href="#" class="btn btn-danger" onclick="deleteResources({{this.id}})">Remover</a>
+                </td>
+            </tr>
+            {{/each}}
+    </div>
 </div>

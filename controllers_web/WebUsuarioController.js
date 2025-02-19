@@ -81,19 +81,19 @@ class WebUsuarioController {
      */
     async show(req, res) {
         try {
-            const usuario = await UsuarioModel.findOne(req.params.id);
-            if (usuario) {
-                return res.render("Usuario/show", {
+            const resource = await ResourcesModel.findOne(req.params.resourceId, req.session.usuario.id);
+            if (resource) {
+                return res.render("Resources/show", {
                     layout: "Layouts/main",
-                    title: "Detalhes do Usuário",
-                    usuario: usuario
+                    title: "Show de Resources",
+                    resource: resource
                 });
             }
-            req.session.message = ["warning", "Usuário não encontrado."];
+            req.session.message = ["warning", "Resources não encontrado."];
         } catch (error) {
             req.session.message = ["danger", JSON.stringify(error)];
         }
-        return res.redirect("/usuario");
+        return res.redirect("/resources");
     }
 
     /**

@@ -7,7 +7,7 @@
         "dev": "nodemon index.js",
         "reset-database": "node .\\commands\\reset-database.js"
     },
-    "author": "Leonardo Bravo Estácio",
+    "author": "Kauê Kluska",
     "license": "ISC",
     "description": "",
     "dependencies": {

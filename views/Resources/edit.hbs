@@ -1,0 +1,27 @@
+<div class="container">
+    <form method="post" action="/resources/{{resources.id}}?_method=put" class="mt-4">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+        <div class="mb-3">
+            <label for="id-input-id" class="form-label">ID</label>
+            <input type="text" id="id-input-id" value="{{resources.id}}" class="form-control" disabled>
+        </div>
+
+        <div class="mb-3">
+            <label for="id-input-nome" class="form-label">Nome</label>
+            <input type="text" name="nome" id="id-input-nome" value="{{resources.nome}}" class="form-control"
+                placeholder="Digite um nome para o recurso. Ex: {{resources.nome}}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id-input-descricao" class="form-label">Descrição</label>
+            <input type="text" name="descricao" id="id-input-descricao" value="{{resources.descricao}}" class="form-control"
+                placeholder="Digite uma descrição para o recurso. Ex: {{resources.descricao}}" required>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="/resources" class="btn btn-secondary">Voltar</a>
+        </div>
+    </form>
+</div>
