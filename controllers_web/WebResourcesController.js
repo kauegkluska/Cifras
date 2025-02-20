@@ -1,135 +1,96 @@
 const ResourcesModel = require("../models/ResourcesModel");
 
 class WebResourcesController {
-    /**
-    * Mostra uma tela com todos os recursos
-    * @param {*} req Requisição da rota do express
-    * @param {*} res Resposta da rota do express
-    */
     async index(req, res) {
         try {
             const message = req.session.message ? req.session.message : null;
             if (message) delete req.session.message;
             const resources = await ResourcesModel.findAll();
-            return res.render("Resources/index", { layout: "Layouts/main", title: "Index de Resources", resources: resources, message: message, csrfToken: req.csrfToken() });
+            return res.render("Resources/index", { layout: "Layouts/main", title: "Index de Cifras", resources: resources, message: message, csrfToken: req.csrfToken() });
         } catch (error) {
-            return res.render("Resources/index", { layout: "Layouts/main", title: "Index de Resources", resources: [], message: ["danger", JSON.stringify(error)] });
+            return res.render("Resources/index", { layout: "Layouts/main", title: "Index de Cifras", resources: [], message: ["danger", JSON.stringify(error)] });
         }
     }
 
-    /**
-    * Mostra um formulário para criação de um novo recurso
-    * @param {*} req Requisição da rota do express
-    * @param {*} res Resposta da rota do express
-    */
     async create(req, res) {
         try {
-            return res.render("Resources/create", { layout: "Layouts/main", title: "Create de resources", csrfToken: req.csrfToken() });
+            return res.render("Resources/create", { layout: "Layouts/main", title: "Criar Cifra", csrfToken: req.csrfToken() });
         } catch (error) {
             req.session.message = ["danger", JSON.stringify(error)];
         }
-        return res.redirect("/resources");
+        return res.redirect("/cifra");
     }
 
-    /**
-    * Salva um novo recurso no banco de dados
-    * @param {*} req Requisição da rota do express
-    * @param {*} res Resposta da rota do express
-    */
     async store(req, res) {
         try {
             const resources = new ResourcesModel();
             resources.nome = req.body.nome;
             resources.descricao = req.body.descricao;
             const result = await resources.save();
-            req.session.message = ["success", `resources ${result.id}-${result.descricao} salvo com sucesso.`];
-            return res.redirect("/resources");
+            req.session.message = ["success", `Cifra ${result.id}-${result.nome} salva com sucesso.`];
+            return res.redirect("/cifra");
         } catch (error) {
             req.session.message = ["danger", JSON.stringify(error)];
         }
-        return res.redirect("/resources");
+        return res.redirect("/cifra");
     }
 
-    /**
-    * Mostra um recurso específico
-    * @param {*} req Requisição da rota do express
-    * @param {*} res Resposta da rota do express
-    * @param {Number} req.params.resourcesId Parâmetro passado pela rota do express
-    */
     async show(req, res) {
         try {
-            const resources = await ResourcesModel.findOne(req.params.resourcesId);
-            if (resources) {
-                return res.render("Resources/show", { layout: "Layouts/main", title: "Show de resources", resources: resources });
+            const resource = await ResourcesModel.findOne(req.params.resourcesId);
+            if (resource) {
+                return res.render("Cifra/show", { layout: "Layouts/main", title: "Mostrar Cifra", resource: resource, usuarioAtual: req.session.usuario });
             }
-            req.session.message = ["warning", "resources não encontrado."];
+            req.session.message = ["warning", "Cifra não encontrada."];
         } catch (error) {
             req.session.message = ["danger", JSON.stringify(error)];
         }
-        return res.redirect("/resources");
+        return res.redirect("/cifra");
     }
 
-    /**
-    * Mostra um formulário para editar um recurso específico
-    * @param {*} req Requisição da rota do express
-    * @param {*} res Resposta da rota do express
-    * @param {Number} req.params.resourcesId Parâmetro passado pela rota do express
-    */
     async edit(req, res) {
         try {
-            const resources = await ResourcesModel.findOne(req.params.resourcesId);
-            if (resources) {
-                return res.render("Resources/edit", { layout: "Layouts/main", title: "Show de resources", resources: resources, csrfToken: req.csrfToken() });
+            const resource = await ResourcesModel.findOne(req.params.resourcesId);
+            if (resource) {
+                return res.render("Cifra/edit", { layout: "Layouts/main", title: "Editar Cifra", resource: resource, csrfToken: req.csrfToken() });
             }
-            req.session.message = ["warning", "resources não encontrado."];
+            req.session.message = ["warning", "Cifra não encontrada."];
         } catch (error) {
             req.session.message = ["danger", JSON.stringify(error)];
         }
-        return res.redirect("/resources");
+        return res.redirect("/cifra");
     }
 
-    /**
-    * Atualiza um recurso existente no banco de dados
-    * @param {*} req Requisição da rota do express
-    * @param {*} res Resposta da rota do express
-    * @param {Number} req.params.resourcesId Parâmetro passado pela rota do express
-    */
     async update(req, res) {
         try {
-            const resources = await ResourcesModel.findOne(req.params.resourcesId);
-            if (!resources) {
-                req.session.message = ["warning", "resources não encontrado."];
-                return res.redirect("/resources");
+            const resource = await ResourcesModel.findOne(req.params.resourcesId);
+            if (!resource) {
+                req.session.message = ["warning", "Cifra não encontrada."];
+                return res.redirect("/cifra");
             }
-            resources.nome = req.body.nome;
-            resources.descricao = req.body.descricao;
-            const result = await resources.update();
-            req.session.message = ["success", `resources ${result.id}-${result.descricao} atualizado com sucesso.`];
+            resource.nome = req.body.nome;
+            resource.descricao = req.body.descricao;
+            const result = await resource.update();
+            req.session.message = ["success", `Cifra ${result.id}-${result.nome} atualizada com sucesso.`];
         } catch (error) {
             req.session.message = ["danger", JSON.stringify(error)];
         }
-        return res.redirect("/resources");
+        return res.redirect("/cifra");
     }
 
-    /**
-    * Remove um recurso existente do banco de dados
-    * @param {*} req Requisição da rota do express
-    * @param {*} res Resposta da rota do express
-    * @param {Number} req.params.resourcesId Parâmetro passado pela rota do express
-    */
     async destroy(req, res) {
         try {
-            const resources = await ResourcesModel.findOne(req.params.resourcesId);
-            if (!resources) {
-                req.session.message = ["warning", "resources não encontrado."];
-                return res.redirect("/resources");
+            const resource = await ResourcesModel.findOne(req.params.resourcesId);
+            if (!resource) {
+                req.session.message = ["warning", "Cifra não encontrada."];
+                return res.redirect("/cifra");
             }
-            const result = await resources.delete();
-            req.session.message = ["success", `resources ${result.id}-${result.descricao} removido com sucesso.`];
+            const result = await resource.delete();
+            req.session.message = ["success", `Cifra ${result.id}-${result.nome} removida com sucesso.`];
         } catch (error) {
             req.session.message = ["danger", JSON.stringify(error)];
         }
-        return res.redirect("/resources");
+        return res.redirect("/cifra");
     }
 }
 

@@ -2,27 +2,17 @@ const express = require("express");
 
 const webUsuarioController = require("../controllers_web/WebUsuarioController");
 const webResourcesController = require("../controllers_web/WebResourcesController")
+const ResourcesModel = require("../models/ResourcesModel");
 const router = express.Router();
 
-
-// Rotas de Resources
-router.get("/resources", webResourcesController.index);
-router.get("/resources/create", webResourcesController.create);
-router.post("/resources", webResourcesController.store);
-router.get("/resources/:resourcesId", webResourcesController.show);
-router.get("/resources/:resourcesId/edit", webResourcesController.edit);
-router.put("/resources/:resourcesId", webResourcesController.update);
-router.delete("/resources/:resourcesId", webResourcesController.destroy);
-
-
-
-router.get("/recurso", async (request, response) => {
-    response.render("Recurso/index", {layout: "Layouts/main", title: "Recursos"});
-});
-
-router.get("/", async (request, response) => {
-    response.render("index", {layout: "Layouts/main", title: "Página inicial"});
-});
+// Rotas de Cifras (anteriormente Resources)
+router.get("/cifra", webResourcesController.index);
+router.get("/cifra/create", webResourcesController.create);
+router.post("/cifra", webResourcesController.store);
+router.get("/cifra/:resourcesId", webResourcesController.show);
+router.get("/cifra/:resourcesId/edit", webResourcesController.edit);
+router.put("/cifra/:resourcesId", webResourcesController.update);
+router.delete("/cifra/:resourcesId", webResourcesController.destroy);
 
 // Rotas de Autenticação
 router.get("/usuario/login", webUsuarioController.loginForm);
@@ -40,6 +30,10 @@ router.put("/usuario/:id/editemailpassword", webUsuarioController.updateEmailPas
 router.put("/usuario/:id", webUsuarioController.update);
 router.delete("/usuario/:id", webUsuarioController.destroy);
 
-
+// Página inicial
+router.get("/", async (request, response) => {
+    const resources = await ResourcesModel.findAll();
+    response.render("index", {layout: "Layouts/main", title: "Página inicial", resources: resources});
+});
 
 module.exports = router;

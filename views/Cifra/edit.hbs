@@ -1,0 +1,20 @@
+<div class="container">
+    <form method="post" action="/cifra/{{resource.id}}?_method=put" class="mt-4">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+        <div class="mb-3">
+            <label for="id-input-nome" class="form-label">Título</label>
+            <input type="text" name="nome" id="id-input-nome" value="{{resource.nome}}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id-input-descricao" class="form-label">Cifra</label>
+            <textarea name="descricao" id="id-input-descricao" class="form-control" rows="10" required>{{resource.descricao}}</textarea>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="/cifra/{{resource.id}}" class="btn btn-primary">Voltar</a>
+        </div>
+    </form>
+</div>
