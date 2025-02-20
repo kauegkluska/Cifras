@@ -19,8 +19,38 @@
     </a>
     </div>
     {{else}}
-    <a href="/usuario/create" class="btn btn-primary">Criar usuário</a>
-    <a href="/usuario/login" class="btn btn-primary">Login</a>
+    <div class="card">
+                <div class="card-header text-center">
+                    <h4>Login</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="/usuario/login">
+                        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <div class="mb-3">
+                            <label for="id-input-email" class="form-label">Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                <input type="email" class="form-control" id="id-input-email"
+                                    placeholder="Digite seu email. Ex: fulano@gmail.com" name="email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id-input-senha" class="form-label">Senha</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                <input type="password" class="form-control" id="id-input-senha"
+                                    placeholder="Digite sua senha." name="senha" required>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+                            <a href="/usuario" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Voltar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    Ainda não tem uma conta? <a href="/usuario/create">Criar conta</a>
+                </div>
     {{/if}}
 
 </div>

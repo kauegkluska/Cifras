@@ -33,7 +33,8 @@ router.delete("/usuario/:id", webUsuarioController.destroy);
 // Página inicial
 router.get("/", async (request, response) => {
     const resources = await ResourcesModel.findAll();
-    response.render("index", {layout: "Layouts/main", title: "Página inicial", resources: resources});
+    const usuario = request.session.usuario || null;
+    response.render("index", {layout: "Layouts/main", title: "Página inicial", resources: resources, usuario: usuario});
 });
 
 module.exports = router;

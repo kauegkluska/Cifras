@@ -1,7 +1,11 @@
 <div class="container">
     <div class="d-flex justify-content-between my-3">
         <h1>Feed de Cifras</h1>
+        {{#if usuario}}
+        <a href="/cifra/create" class="btn btn-primary">Adicionar Cifra</a>
+        {{else}}
         <a href="/usuario" class="btn btn-primary">Login</a>
+        {{/if}}
     </div>
 
     <div class="list-group">
