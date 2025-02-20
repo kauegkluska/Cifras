@@ -27,7 +27,7 @@ class WebResourcesController {
             const resources = new ResourcesModel();
             resources.nome = req.body.nome;
             resources.descricao = req.body.descricao;
-            resources.usuarioId = req.session.usuario.id; // Adiciona o ID do usuário logado
+            resources.usuarioId = req.session.usuario.id;
             const result = await resources.save();
             req.session.message = ["success", `Cifra ${result.id}-${result.nome} salva com sucesso.`];
             return res.redirect("/");
@@ -54,10 +54,10 @@ class WebResourcesController {
     async edit(req, res) {
         try {
             const resource = await ResourcesModel.findOne(req.params.resourcesId);
-            if (resource) {
+            if (resource && resource.usuarioId === req.session.usuario.id) { // Verifica se o usuarioId corresponde
                 return res.render("Cifra/edit", { layout: "Layouts/main", title: "Editar Cifra", resource: resource, csrfToken: req.csrfToken() });
             }
-            req.session.message = ["warning", "Cifra não encontrada."];
+            req.session.message = ["warning", "Cifra não encontrada ou você não tem permissão para editá-la."];
         } catch (error) {
             req.session.message = ["danger", JSON.stringify(error)];
         }
@@ -67,8 +67,8 @@ class WebResourcesController {
     async update(req, res) {
         try {
             const resource = await ResourcesModel.findOne(req.params.resourcesId);
-            if (!resource) {
-                req.session.message = ["warning", "Cifra não encontrada."];
+            if (!resource || resource.usuarioId !== req.session.usuario.id) { // Verifica se o usuarioId corresponde
+                req.session.message = ["warning", "Cifra não encontrada ou você não tem permissão para editá-la."];
                 return res.redirect("/");
             }
             resource.nome = req.body.nome;
@@ -84,8 +84,8 @@ class WebResourcesController {
     async destroy(req, res) {
         try {
             const resource = await ResourcesModel.findOne(req.params.resourcesId);
-            if (!resource) {
-                req.session.message = ["warning", "Cifra não encontrada."];
+            if (!resource || resource.usuarioId !== req.session.usuario.id) { // Verifica se o usuarioId corresponde
+                req.session.message = ["warning", "Cifra não encontrada ou você não tem permissão para removê-la."];
                 return res.redirect("/");
             }
             const result = await resource.delete();

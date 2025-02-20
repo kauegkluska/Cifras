@@ -41,7 +41,10 @@ CREATE TABLE IF NOT EXISTS mydb.resources (
   descricao TEXT NOT NULL,
   dataCriacao TIMESTAMP NULL,
   dataAtualizacao TIMESTAMP NULL,
-  PRIMARY KEY (id))
+  usuarioId BIGINT NOT NULL, -- Adicionado
+  PRIMARY KEY (id),
+  FOREIGN KEY (usuarioId) REFERENCES mydb.Usuario(id) ON DELETE CASCADE -- Adicionado
+)
 ENGINE = InnoDB;
 
 

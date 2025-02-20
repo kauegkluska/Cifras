@@ -244,12 +244,14 @@ class WebUsuarioController {
 
             req.session.usuario = { id: usuario.id, nome: usuario.nome, email: usuario.email };
             req.session.message = ["success", `Bem-vindo, ${usuario.nome}!`];
-            return res.redirect("/usuario");
+            return res.redirect("/"); // Redireciona para o feed
         } catch (error) {
             req.session.message = ["danger", JSON.stringify(error)];
         }
         return res.redirect("/usuario");
     }
+
+
 
     /**
      * Faz o logout do usuário.

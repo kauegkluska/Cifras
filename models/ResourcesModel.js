@@ -1,33 +1,31 @@
 const DataBase = require("../database/DataBase");
 
 class ResourcesModel {
-    /** 
-     * Os atributos da classe Model precisam ser correspondentes às colunas do banco de dados.
-     */
     id = null;
+    nome = null;
     descricao = null;
     dataAtualizacao = null;
     dataCriacao = null;
+    usuarioId = null; 
 
-    /**
-     * Construtor da Classe ResourcesModel
-     * @param {Resources}     resources     O objeto de entrada é simples (precisa conter apenas chave e valor, sem métodos) e precisa conter as chaves: id, descricao, dataAtualizacao e dataCriacao. Esses campos são as colunas da tabela no banco de dados. Caso não passe um objeto com esses campos, um model vazio será criado.
-     */
     constructor(resources) {
         if (resources &&
             "id" in resources &&
             "nome" in resources &&
             "descricao" in resources &&
             "dataAtualizacao" in resources &&
-            "dataCriacao" in resources
+            "dataCriacao" in resources &&
+            "usuarioId" in resources 
         ) {
             this.id = resources.id;
-            this.nome = resources.nome
+            this.nome = resources.nome;
             this.descricao = resources.descricao;
             this.dataAtualizacao = resources.dataAtualizacao;
             this.dataCriacao = resources.dataCriacao;
+            this.usuarioId = resources.usuarioId; 
         }
     }
+
 
     /**
      * Busca um objeto ResourcesModel no banco de dados
@@ -63,39 +61,34 @@ class ResourcesModel {
      * @returns {ResourcesModel} Retorna um objeto ResourcesModel com as informações recém inseridas no banco de dados.
      */
     async save() {
-        // Gera um timestamp no formato "YYYY-MM-DD HH:MM:SS" com a data e horário atual
         const timestamp = (new Date()).toISOString().slice(0, 19).replace('T', ' ');
-        const result = await DataBase.executeSQLQuery(`INSERT INTO resources VALUES (id, ?, ?, ?, ?);`,
-            [   
+        const result = await DataBase.executeSQLQuery(`INSERT INTO resources (nome, descricao, dataAtualizacao, dataCriacao, usuarioId) VALUES (?, ?, ?, ?, ?);`,
+            [
                 this.nome,
                 this.descricao,
                 timestamp,
-                timestamp
-                
+                timestamp,
+                this.usuarioId // Adicionado
             ]
         );
         const resources = await ResourcesModel.findOne(result.insertId);
         return resources;
     }
 
-    /**
-     * Atualiza um objeto ResourcesModel no banco de dados. O atributo que deve ser informado: "descricao". O atributo: "dataAtualizacao" é atualizado automaticamente. Os atributos: "id" e "dataCriacao" não são alterados.
-     * @returns {ResourcesModel} Retorna um objeto ResourcesModel com as informações atualizadas no banco de dados.
-     */
     async update() {
-        // Gera um timestamp no formato "YYYY-MM-DD HH:MM:SS" com a data e horário atual
         const timestamp = (new Date()).toISOString().slice(0, 19).replace('T', ' ');
         const result = await DataBase.executeSQLQuery(`UPDATE resources
                                                        SET 
                                                             nome = ?,
                                                             descricao = ?,
                                                            dataAtualizacao = ?
-                                                       WHERE resources.id = ?`,
-            [   
+                                                       WHERE resources.id = ? AND resources.usuarioId = ?`, // Adicionado usuarioId na condição
+            [
                 this.nome,
                 this.descricao,
                 timestamp,
-                this.id
+                this.id,
+                this.usuarioId // Adicionado
             ]
         );
         const resources = await ResourcesModel.findOne(this.id);
