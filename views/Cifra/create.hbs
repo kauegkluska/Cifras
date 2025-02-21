@@ -1,20 +1,20 @@
 <div class="container">
-    <form method="post" action="/cifra" class="mt-4">
+    <form method="post" action="/cifra" class="mt-4 p-4 bg-white rounded shadow">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-        <div class="mb-3">
-            <label for="id-input-nome" class="form-label">Título</label>
-            <input type="text" class="form-control" id="id-input-nome" placeholder="Digite o título da Cifra" name="nome" required>
+        <div class="mb-4">
+            <label for="id-input-nome" class="form-label fw-bold">Título</label>
+            <input type="text" class="form-control form-control-lg" id="id-input-nome" placeholder="Digite o título da Cifra" name="nome" required>
         </div>
 
-        <div class="mb-3">
-            <label for="id-input-descricao" class="form-label">Cifra</label>
+        <div class="mb-4">
+            <label for="id-input-descricao" class="form-label fw-bold">Cifra</label>
             <textarea class="form-control" id="id-input-descricao" placeholder="Digite a cifra" name="descricao" rows="10" required></textarea>
         </div>
 
         <div class="d-flex justify-content-between mt-4">
-            <button type="submit" class="btn btn-primary">Criar</button>
-            <a href="/" class="btn btn-primary">Voltar</a>
+            <button type="submit" class="btn btn-custom"><i class="fas fa-plus fa-icon"></i>Criar</button>
+            <a href="/" class="btn btn-outline-secondary"><i class="fas fa-arrow-left fa-icon"></i>Voltar</a>
         </div>
     </form>
 </div>

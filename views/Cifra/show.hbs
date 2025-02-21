@@ -1,11 +1,13 @@
 <div class="container mt-4">
-    <h2>{{resource.nome}}</h2>
-    <pre>{{resource.descricao}}</pre>
-    
-    <div class="d-flex justify-content-between mt-4">
-        {{#if (igual resource.usuarioId usuarioAtual.id) }}
-        <a href="/cifra/{{resource.id}}/edit" class="btn btn-secondary">Editar</a>
-        {{/if}}
-        <a href="/" class="btn btn-primary">Voltar</a>
+    <div class="card p-4 bg-white rounded shadow">
+        <h2 class="mb-4 fw-bold">{{resource.nome}}</h2>
+        <pre class="bg-light p-3 rounded">{{resource.descricao}}</pre>
+        
+        <div class="d-flex justify-content-between mt-4">
+            {{#if (igual resource.usuarioId usuarioAtual.id) }}
+            <a href="/cifra/{{resource.id}}/edit" class="btn btn-custom"><i class="fas fa-edit fa-icon"></i>Editar</a>
+            {{/if}}
+            <a href="/" class="btn btn-outline-secondary"><i class="fas fa-arrow-left fa-icon"></i>Voltar</a>
+        </div>
     </div>
 </div>

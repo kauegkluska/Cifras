@@ -1,16 +1,17 @@
 <div class="container">
-    <div class="d-flex justify-content-between my-3">
-        <h1>Feed de Cifras</h1>
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h1 class="mb-0">Cifras</h1>
         {{#if usuario}}
-        <a href="/cifra/create" class="btn btn-primary">Adicionar Cifra</a>
-        {{else}}
-        <a href="/usuario" class="btn btn-primary">Login</a>
+        <a href="/cifra/create" class="btn btn-custom"><i class="fas fa-plus fa-icon"></i>Adicionar Cifra</a>
         {{/if}}
     </div>
 
     <div class="list-group">
-      {{#each resources}}
-        <a href="/cifra/{{this.id}}" class="list-group-item list-group-item-action">{{this.nome}}</a>
-      {{/each}}
+        {{#each resources}}
+        <a href="/cifra/{{this.id}}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <span>{{this.nome}}</span>
+            <i class="fas fa-chevron-right"></i>
+        </a>
+        {{/each}}
     </div>
 </div>

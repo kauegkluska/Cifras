@@ -1,20 +1,20 @@
 <div class="container">
-    <form method="post" action="/cifra/{{resource.id}}?_method=put" class="mt-4">
+    <form method="post" action="/cifra/{{resource.id}}?_method=put" class="mt-4 p-4 bg-white rounded shadow">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-        <div class="mb-3">
-            <label for="id-input-nome" class="form-label">Título</label>
-            <input type="text" name="nome" id="id-input-nome" value="{{resource.nome}}" class="form-control" required>
+        <div class="mb-4">
+            <label for="id-input-nome" class="form-label fw-bold">Título</label>
+            <input type="text" name="nome" id="id-input-nome" value="{{resource.nome}}" class="form-control form-control-lg" required>
         </div>
 
-        <div class="mb-3">
-            <label for="id-input-descricao" class="form-label">Cifra</label>
+        <div class="mb-4">
+            <label for="id-input-descricao" class="form-label fw-bold">Cifra</label>
             <textarea name="descricao" id="id-input-descricao" class="form-control" rows="10" required>{{resource.descricao}}</textarea>
         </div>
 
         <div class="d-flex justify-content-between mt-4">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <a href="/cifra/{{resource.id}}" class="btn btn-primary">Voltar</a>
+            <button type="submit" class="btn btn-custom"><i class="fas fa-save fa-icon"></i>Salvar</button>
+            <a href="/cifra/{{resource.id}}" class="btn btn-outline-secondary"><i class="fas fa-arrow-left fa-icon"></i>Voltar</a>
         </div>
     </form>
 </div>
