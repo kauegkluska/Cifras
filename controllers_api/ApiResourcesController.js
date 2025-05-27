@@ -52,9 +52,9 @@ class ApiResourcesController {
     async apiStore(req, res) {
         try {
             const resource = new ResourcesModel();
-            resource.nome = req.body.nome;         // Changed
-            resource.descricao = req.body.descricao;   // Changed
-            resource.Usuario_id = req.body.Usuario_id; // Changed
+            resource.nome = req.body.nome;         
+            resource.descricao = req.body.descricao;   
+            resource.Usuario_id = req.body.Usuario_id; 
             const result = await resource.save();
             return res.status(200).json(result);
         } catch (error) {
@@ -64,15 +64,15 @@ class ApiResourcesController {
         
     }
     
-    // ApiResourcesController.js (apiUpdate method)
+   
     async apiUpdate(req, res) {
         try {
             const resource = await ResourcesModel.findOne(req.params.resourceId);
             if(!resource)
                 return res.status(404).json({ error: "Recurso não encontrado" });
-            resource.nome = req.body.nome;         // Changed
-            resource.descricao = req.body.descricao;   // Changed
-            resource.Usuario_id = req.body.Usuario_id; // Changed
+            resource.nome = req.body.nome;         
+            resource.descricao = req.body.descricao;  
+            resource.Usuario_id = req.body.Usuario_id; 
             const result = await resource.update();
             return res.status(200).json(result);
         } catch (error) {
